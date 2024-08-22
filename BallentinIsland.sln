@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallentinIsland", "BallentinIsland.csproj", "{CD70C589-D831-46C3-A282-B5D8E70AE663}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD70C589-D831-46C3-A282-B5D8E70AE663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD70C589-D831-46C3-A282-B5D8E70AE663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD70C589-D831-46C3-A282-B5D8E70AE663}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{CD70C589-D831-46C3-A282-B5D8E70AE663}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{CD70C589-D831-46C3-A282-B5D8E70AE663}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{CD70C589-D831-46C3-A282-B5D8E70AE663}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal
