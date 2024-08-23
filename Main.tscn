@@ -1,3 +1,24 @@
-[gd_scene format=3 uid="uid://bt4uu6otblrry"]
+[gd_scene load_steps=5 format=3 uid="uid://bt4uu6otblrry"]
+
+[ext_resource type="PackedScene" uid="uid://6hqvi6g2is4w" path="res://Core/Tree_temp_climate_002.FBX" id="2_ew6v7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2usqu"]
+
+[sub_resource type="Sky" id="Sky_2eps0"]
+sky_material = SubResource("ProceduralSkyMaterial_2usqu")
+
+[sub_resource type="Environment" id="Environment_rprta"]
+background_mode = 2
+background_energy_multiplier = 3.61
+sky = SubResource("Sky_2eps0")
 
 [node name="Main" type="Node3D"]
+
+[node name="Tree_temp_climate_002" parent="." instance=ExtResource("2_ew6v7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.365738, 0, 0.0205703)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41739, 5.40452)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Camera3D"]
+environment = SubResource("Environment_rprta")

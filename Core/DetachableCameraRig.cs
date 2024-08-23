@@ -31,6 +31,8 @@ namespace BallentinIsland.Core
         [Export]
         private float MaxVerticalOffset {get; set;}
 
+        private float currentVerticalOffset;
+
         private Vector3 GlobalPositionOverride {get; set;}
         private Camera3D camera;
         private Node3D parent;
@@ -38,27 +40,46 @@ namespace BallentinIsland.Core
 
         public override void _Ready()
         {
+            parent = GetParent<Node3D>();
+
             camera = GetNode<Camera3D>("Camera");
         }
 
         public override void _Process(double delta)
         {
-            parent = GetParent<Node3D>();
+            if (!IsAttached)
+            {
+                Position = parent.GlobalPosition - GlobalPositionOverride;
+            }
         }
 
-        public void MovVerticalOffset(float delta)
+        public void ToggleCameraAttachment()
+        {
+            IsAttached = !IsAttached;
+
+            if (IsAttached)
+            {
+                Position = new Vector3(0, currentVerticalOffset, 0);
+            }
+        }
+
+        public void MoveVerticalOffset(float delta)
         {
             if (Position.Y + delta <= MaxVerticalOffset && Position.Y >= MinVerticalOffset)
             {
-                Position = new Vector3(Position.X, Position.Y + delta, Position.Z);
+                currentVerticalOffset += delta;
+                Position = new Vector3(Position.X, currentVerticalOffset, Position.Z);
             }
         }
 
 
         public void Move(Vector3 movementDelta)
         {
-            movementDelta.Y = 0;
-            GlobalPositionOverride += movementDelta;
+            if (!IsAttached)
+            {
+                movementDelta.Y = 0;
+                GlobalPositionOverride += movementDelta;
+            }
         }
     }
 }
