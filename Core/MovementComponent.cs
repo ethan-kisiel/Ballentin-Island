@@ -28,8 +28,8 @@ namespace BallentinIsland.Core
         private Node3D parent;
         private MovementFrame[] movementFrames;
 
-        private Godot.Vector3 TargetPosition {get; set;}
-        private Godot.Vector3 TargetRotation {get; set;}
+        private Vector3 TargetPosition {get; set;}
+        private Vector3 TargetRotation {get; set;}
 
 
         private int currentFrame = 0;
@@ -67,6 +67,9 @@ namespace BallentinIsland.Core
         [Rpc(MultiplayerApi.RpcMode.Authority)]
         void ApplyAuthoratativeMovement(MovementFrame newFrame)
         {
+            // Operates separate from simple (client side) Apply Movement frame
+            // overwrites current frame to be the authoratative frame + 1
+
             if (!Multiplayer.IsServer())
             {
                 LastAuthoratativeMovement = newFrame;
@@ -76,28 +79,34 @@ namespace BallentinIsland.Core
             {
                 ApplyMovementFrame(newFrame);
             }
-
         }
 
 
 
         // ADD Movement frame from the client 
         // ( this will be done from the player character/encapsulating class )
-        public void AddMovementFrame()
+        public void AddMovementFrame(MovementFrame movementFrame)
         {
-            return;
+            // this will be called when we have a movement input from the authoratative client
+            movementFrames[currentFrame+1] = movementFrame;
+
+            if (Multiplayer.IsServer())
+            {
+                Rpc(nameof(ApplyAuthoratativeMovement), movementFrame);
+            }
         }
 
-        public MovementFrame CreateMovementFrame(Godot.Vector3 position)
+        public MovementFrame CreateMovementFrame(Vector3 position)
         {
             MovementFrame newFrame = new MovementFrame();
-            newFrame.FrameId = lastRegisteredFrame++ % PredictionBufferSize;
+            lastRegisteredFrame++;
+            newFrame.FrameId = lastRegisteredFrame;
             newFrame.Position = position;
 
             return newFrame;
         }
         
-        public MovementFrame CreateMovementFrame(Godot.Vector3 position, Godot.Vector3 movementDelta)
+        public MovementFrame CreateMovementFrame(Vector3 position, Vector3 movementDelta)
         {
             MovementFrame newFrame = CreateMovementFrame(position);
             newFrame.MovementDelta = movementDelta;
@@ -106,10 +115,13 @@ namespace BallentinIsland.Core
         }
 
         
-        // public void CreateMovementFrame(Vector3 position)
-        // {
-            
-        // }
+        public MovementFrame CreateMovementFrame(Vector3 position, Vector3 movementDelta, Vector3 rotation)
+        {
+            MovementFrame newFrame = CreateMovementFrame(position, movementDelta);
+            newFrame.Rotation = rotation;
+
+            return newFrame;
+        }
         
         // public void CreateMovementFrame(Vector3 position)
         // {

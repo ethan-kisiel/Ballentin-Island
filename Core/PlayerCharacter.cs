@@ -13,13 +13,15 @@
 using Godot;
 using System;
 
-namespace BallentinIsland.Core
+public partial class PlayerCharacter : Node3D
 {
-    public partial class MovementFrame: Node
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
     {
-        public int FrameId {get; set;}
-        public Vector3 Position {get; set;}
-        public Vector3 Rotation {get; set;}
-        public Vector3 MovementDelta {get; set;}
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
+    {
     }
 }
