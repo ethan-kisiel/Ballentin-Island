@@ -1,24 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqm5txehgwiny"]
+[gd_scene load_steps=7 format=3 uid="uid://bqm5txehgwiny"]
 
 [ext_resource type="Script" path="res://Core/PlayerCharacter.cs" id="1_6bhth"]
 [ext_resource type="PackedScene" uid="uid://h34qc3sxux8u" path="res://Core/MovementComponent.tscn" id="1_a2hc0"]
+[ext_resource type="Material" uid="uid://4gxtvo4kuaph" path="res://Core/Materials/GlobalMaterial.tres" id="3_sgm0k"]
 [ext_resource type="Script" path="res://Core/DetachableCameraRig.cs" id="3_w5dvi"]
 
-[node name="PlayerCharacter" type="Node3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fj3aa"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wt65x"]
+
+[node name="PlayerCharacter" type="CharacterBody3D"]
+motion_mode = 1
 script = ExtResource("1_6bhth")
+CameraSpeed = 15.0
+
+[node name="CharacterModel" type="Skeleton3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_fj3aa")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+material_override = ExtResource("3_sgm0k")
+mesh = SubResource("CapsuleMesh_wt65x")
 
 [node name="MovementComponentBase" parent="." instance=ExtResource("1_a2hc0")]
 UseClientPrediction = true
 
-[node name="NavAgent" type="NavigationAgent3D" parent="."]
-
-[node name="CharacterRig" type="Node3D" parent="."]
-
-[node name="CharacterModel" type="Skeleton3D" parent="CharacterRig"]
-
 [node name="CameraRig" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 script = ExtResource("3_w5dvi")
-DefaultVerticalOffset = 5.0
-MinVerticalOffset = 1.0
+DefaultVerticalOffset = 10.0
+MinVerticalOffset = 5.0
+MaxVerticalOffset = 10.0
 
 [node name="Camera" type="Camera3D" parent="CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 0, 0)
+current = true
+
+[node name="NavAgent" type="NavigationAgent3D" parent="."]
+debug_enabled = true

@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://h34qc3sxux8u"]
+[gd_scene load_steps=3 format=3 uid="uid://h34qc3sxux8u"]
 
 [ext_resource type="Script" path="res://Core/MovementComponent.cs" id="1_dqs30"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ho2u7"]
+properties/0/path = NodePath(".:TargetPosition")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
 [node name="MovementComponentBase" type="Node3D"]
 script = ExtResource("1_dqs30")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ho2u7")

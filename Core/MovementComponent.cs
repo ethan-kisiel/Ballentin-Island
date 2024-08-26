@@ -11,6 +11,7 @@
  ///////////////////////////////////////////////////////////////////////////////
 
 using Godot;
+using Godot.Collections;
 using System;
 
 
@@ -20,112 +21,99 @@ namespace BallentinIsland.Core
     {
         [Export]
         public bool UseClientPrediction {get; set;}
+
         [Export]
         public int PredictionBufferSize {get; set;} = 1024;
-        
-        public MovementFrame LastAuthoratativeMovement {get; set;}
 
-        private Node3D parent;
-        private MovementFrame[] movementFrames;
+        [Export]
+        public Vector3 TargetPosition {get; set;}
 
-        private Vector3 TargetPosition {get; set;}
+        [Export] 
+        public float MovementSpeed { get; set;} = 500.0f;
+
+        private PlayerCharacter parent;
+        private NavigationAgent3D navAgent;
         private Vector3 TargetRotation {get; set;}
 
+        private Vector3 nextTargetPos;
 
-        private int currentFrame = 0;
-        private int lastRegisteredFrame = 0;
-    
+        public override void _EnterTree()
+        {
+            GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(1);
+            //SetMultiplayerAuthority(1);
+        }
+
 
         public override void _Ready()
         {
             // grab parent and store it ( this is where movement will happen )
-            parent = GetParent<Node3D>();
-            movementFrames = new MovementFrame[PredictionBufferSize];
+            parent = GetParent<PlayerCharacter>();
+            navAgent = parent.GetNode<NavigationAgent3D>("NavAgent");
+
+            TargetPosition = parent.GlobalPosition;
+            GD.Print(GetMultiplayerAuthority());
         }
 
-        public override void _PhysicsProcess(double delta)
+        public void PerformMovement(double delta)
         {
-            if (!Multiplayer.IsServer())
-            {
-                ApplyMovementFrame(movementFrames[currentFrame]);
-            }
-
-            parent.GlobalPosition = parent.GlobalPosition.Lerp(TargetPosition, 0.5f);
-            parent.GlobalRotation = parent.GlobalRotation.Lerp(TargetRotation, 0.5f);
-        }
-
-        public void ApplyMovementFrame(MovementFrame movementFrame)
-        {
-            TargetPosition = movementFrame.Position + movementFrame.MovementDelta;
-            TargetRotation = movementFrame.Rotation;
-
-            currentFrame = (movementFrame.FrameId + 1) % PredictionBufferSize;
-        }
-
-        // RPCS
-
-        [Rpc(MultiplayerApi.RpcMode.Authority)]
-        void ApplyAuthoratativeMovement(MovementFrame newFrame)
-        {
-            // Operates separate from simple (client side) Apply Movement frame
-            // overwrites current frame to be the authoratative frame + 1
-
-            if (!Multiplayer.IsServer())
-            {
-                LastAuthoratativeMovement = newFrame;
-                currentFrame = (newFrame.FrameId + 1) % PredictionBufferSize;
-            }
-            else
-            {
-                ApplyMovementFrame(newFrame);
-            }
-        }
-
-
-
-        // ADD Movement frame from the client 
-        // ( this will be done from the player character/encapsulating class )
-        public void AddMovementFrame(MovementFrame movementFrame)
-        {
-            // this will be called when we have a movement input from the authoratative client
-            movementFrames[currentFrame+1] = movementFrame;
-
             if (Multiplayer.IsServer())
             {
-                Rpc(nameof(ApplyAuthoratativeMovement), movementFrame);
+
+                nextTargetPos = navAgent.GetNextPathPosition();
+                //GD.Print(nextTargetPos.DistanceTo(parent.GlobalPosition));
+                if (nextTargetPos.DistanceTo(parent.GlobalPosition) >= 1)
+                {
+                    if (Multiplayer.IsServer() || IsMultiplayerAuthority())
+                    {
+                        Vector3 direction = nextTargetPos - parent.GlobalPosition;
+                        //GD.Print($"NOT NORMALIZED: {direction}");
+                        direction = direction.Normalized();
+
+                        parent.Velocity = direction * MovementSpeed * (float)delta;
+                        parent.MoveAndSlide();
+
+                        if(Multiplayer.IsServer())
+                        {
+                            TargetPosition = parent.GlobalPosition;
+                        }
+    
+                    }
+                }
+
+                if (!Multiplayer.IsServer())
+                {
+                    parent.GlobalPosition = parent.GlobalPosition.Lerp(TargetPosition, 0.5f);
+                }
+
+            }
+
+            //GD.Print(TargetPosition);
+
+            if (!Multiplayer.IsServer())
+            {
+                parent.GlobalPosition = parent.GlobalPosition.Lerp(TargetPosition, 0.5f);
             }
         }
 
-        public MovementFrame CreateMovementFrame(Vector3 position)
+        public void ClientSetTargetNavPosition(Vector3 targetNavPos)
         {
-            MovementFrame newFrame = new MovementFrame();
-            lastRegisteredFrame++;
-            newFrame.FrameId = lastRegisteredFrame;
-            newFrame.Position = position;
-
-            return newFrame;
-        }
-        
-        public MovementFrame CreateMovementFrame(Vector3 position, Vector3 movementDelta)
-        {
-            MovementFrame newFrame = CreateMovementFrame(position);
-            newFrame.MovementDelta = movementDelta;
-
-            return newFrame;
+            //GD.Print($"Network AUTH is : {GetMultiplayerAuthority()}");
+            Rpc(nameof(SetTargetNavPosition), targetNavPos);
         }
 
-        
-        public MovementFrame CreateMovementFrame(Vector3 position, Vector3 movementDelta, Vector3 rotation)
+        [Rpc(MultiplayerApi.RpcMode.Authority)]
+        public void SetTargetNavPosition(Vector3 targetNavPos)
         {
-            MovementFrame newFrame = CreateMovementFrame(position, movementDelta);
-            newFrame.Rotation = rotation;
+            //GD.Print($"In RPC");
+            if (Multiplayer.IsServer())
+            {
+                navAgent.TargetPosition = targetNavPos;
+            }
 
-            return newFrame;
+            if (IsMultiplayerAuthority())
+            {
+                navAgent.TargetPosition = targetNavPos;
+            }
         }
-        
-        // public void CreateMovementFrame(Vector3 position)
-        // {
-            
-        // }
     }
 }

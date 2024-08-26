@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://6hqvi6g2is4w"
-path="res://.godot/imported/Tree_temp_climate_002.FBX-3d6b388799673d45ebb58b9cdbe4e8b1.scn"
+uid="uid://c5ujpxqx5tsg0"
+path="res://.godot/imported/Road_stone_3.fbx-c655edad8748904e0bc5a02fd06bb3ea.scn"
 
 [deps]
 
-source_file="res://Core/Tree_temp_climate_002.FBX"
-dest_files=["res://.godot/imported/Tree_temp_climate_002.FBX-3d6b388799673d45ebb58b9cdbe4e8b1.scn"]
+source_file="res://Core/Meshes/Road_stone_3.fbx"
+dest_files=["res://.godot/imported/Road_stone_3.fbx-c655edad8748904e0bc5a02fd06bb3ea.scn"]
 
 [params]
 
@@ -33,9 +33,9 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "materials": {
-"Material #26": {
+"lambert37.054": {
 "use_external/enabled": true,
-"use_external/path": "res://Core/Materials/GlobalChildMaterialTest.tres"
+"use_external/path": "res://Core/Meshes/RoadMat.tres"
 }
 }
 }

@@ -5,7 +5,5 @@
 
 [resource]
 next_pass = ExtResource("1_w6ayw")
-diffuse_mode = 3
-specular_mode = 1
 vertex_color_is_srgb = true
 albedo_texture = ExtResource("1_cwt2d")

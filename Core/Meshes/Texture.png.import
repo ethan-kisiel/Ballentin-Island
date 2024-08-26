@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8eid6j38gtpc"
-path.s3tc="res://.godot/imported/T_Trees_temp_climate.png-3d01e0e4f2e795c203eed6e2337efcea.s3tc.ctex"
-path.etc2="res://.godot/imported/T_Trees_temp_climate.png-3d01e0e4f2e795c203eed6e2337efcea.etc2.ctex"
+uid="uid://bt5jgawteu3tf"
+path.s3tc="res://.godot/imported/Texture.png-c79a11ca5255332dd787a721e670e4a2.s3tc.ctex"
+path.etc2="res://.godot/imported/Texture.png-c79a11ca5255332dd787a721e670e4a2.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://Core/Materials/T_Trees_temp_climate.png"
-dest_files=["res://.godot/imported/T_Trees_temp_climate.png-3d01e0e4f2e795c203eed6e2337efcea.s3tc.ctex", "res://.godot/imported/T_Trees_temp_climate.png-3d01e0e4f2e795c203eed6e2337efcea.etc2.ctex"]
+source_file="res://Core/Meshes/Texture.png"
+dest_files=["res://.godot/imported/Texture.png-c79a11ca5255332dd787a721e670e4a2.s3tc.ctex", "res://.godot/imported/Texture.png-c79a11ca5255332dd787a721e670e4a2.etc2.ctex"]
 
 [params]
 

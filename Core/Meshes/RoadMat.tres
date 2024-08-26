@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cxwlw51nacdmc"]
+
+[ext_resource type="Texture2D" uid="uid://bt5jgawteu3tf" path="res://Core/Meshes/Texture.png" id="1_3otyo"]
+[ext_resource type="Material" uid="uid://4gxtvo4kuaph" path="res://Core/Materials/GlobalMaterial.tres" id="2_lvm44"]
+
+[resource]
+next_pass = ExtResource("2_lvm44")
+diffuse_mode = 3
+specular_mode = 1
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("1_3otyo")
+albedo_texture_force_srgb = true
