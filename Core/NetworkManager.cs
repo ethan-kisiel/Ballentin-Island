@@ -29,7 +29,7 @@ public partial class NetworkManager : Node
             Multiplayer.MultiplayerPeer = network;
             Multiplayer.PeerConnected += SpawnPlayer;
             long pid = 1;
-            SpawnPlayer(pid);
+            //SpawnPlayer(pid);
             GD.PushWarning("Creating SERVER");
         }
         else
