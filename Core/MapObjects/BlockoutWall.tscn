@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bimnru0g5pwx"]
+
+[ext_resource type="Script" path="res://Core/MapObjects/BlockoutWall.cs" id="1_2ajew"]
+[ext_resource type="Material" uid="uid://ckpeu4k3d3kny" path="res://Core/Materials/GlobalBlockoutMaterial.tres" id="1_wm33p"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_p3p12"]
+material = ExtResource("1_wm33p")
+
+[node name="BlockoutWall" type="Node3D"]
+script = ExtResource("1_2ajew")
+ScaleOverride = Vector3(1, 1, 1)
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_p3p12")
+
+[node name="NavObstacle" type="NavigationObstacle3D" parent="."]
+transform = Transform3D(0.666667, 0, 0, 0, 0.666667, 0, 0, 0, 0.666667, 0, 0, 0)
+affect_navigation_mesh = true

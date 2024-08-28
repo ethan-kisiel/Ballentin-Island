@@ -37,6 +37,7 @@ MaxVerticalOffset = 10.0
 [node name="Camera" type="Camera3D" parent="CameraRig"]
 transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 0, 0)
 current = true
+fov = 37.8493
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
 debug_enabled = true
