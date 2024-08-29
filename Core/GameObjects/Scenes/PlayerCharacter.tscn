@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://bqm5txehgwiny"]
 
-[ext_resource type="Script" path="res://Core/PlayerCharacter.cs" id="1_6bhth"]
-[ext_resource type="PackedScene" uid="uid://h34qc3sxux8u" path="res://Core/MovementComponent.tscn" id="1_a2hc0"]
+[ext_resource type="Script" path="res://Core/GameObjects/Scripts/PlayerCharacter.cs" id="1_6bhth"]
+[ext_resource type="PackedScene" uid="uid://h34qc3sxux8u" path="res://Core/GameObjects/Scenes/MovementComponent.tscn" id="1_a2hc0"]
 [ext_resource type="Material" uid="uid://4gxtvo4kuaph" path="res://Core/Materials/GlobalMaterial.tres" id="3_sgm0k"]
-[ext_resource type="Script" path="res://Core/DetachableCameraRig.cs" id="3_w5dvi"]
+[ext_resource type="Script" path="res://Core/GameObjects/Scripts/DetachableCameraRig.cs" id="3_w5dvi"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fj3aa"]
 
@@ -24,11 +24,11 @@ disabled = true
 material_override = ExtResource("3_sgm0k")
 mesh = SubResource("CapsuleMesh_wt65x")
 
-[node name="MovementComponentBase" parent="." instance=ExtResource("1_a2hc0")]
+[node name="MovementComponent" parent="." instance=ExtResource("1_a2hc0")]
 UseClientPrediction = true
 
 [node name="CameraRig" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 script = ExtResource("3_w5dvi")
 DefaultVerticalOffset = 10.0
 MinVerticalOffset = 5.0
@@ -37,7 +37,6 @@ MaxVerticalOffset = 10.0
 [node name="Camera" type="Camera3D" parent="CameraRig"]
 transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 0, 0)
 current = true
-fov = 37.8493
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
 debug_enabled = true

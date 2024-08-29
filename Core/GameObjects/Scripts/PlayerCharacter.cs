@@ -47,9 +47,9 @@ namespace BallentinIsland.Core
 
         public override void _Ready()
         {
-            Movement = GetNodeOrNull<MovementComponent>("MovementComponentBase");
-            CameraRig = GetNodeOrNull<DetachableCameraRig>("CameraRig");
-            navAgent = GetNodeOrNull<NavigationAgent3D>("NavAgent");
+            Movement = GetNode<MovementComponent>("MovementComponent");
+            CameraRig = GetNode<DetachableCameraRig>("CameraRig");
+            navAgent = GetNode<NavigationAgent3D>("NavAgent");
 
             //NavAgent = GetNodeOrNull<NavigationAgent3D>("NavAgent");
 

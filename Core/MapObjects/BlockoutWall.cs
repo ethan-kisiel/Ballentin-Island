@@ -16,7 +16,7 @@ using System;
 
 namespace BallentinIsland.Core.MapObjects
 {
-[   Tool]
+    [Tool]
     public partial class BlockoutWall : Node3D
     {
         // Called when the node enters the scene tree for the first time.

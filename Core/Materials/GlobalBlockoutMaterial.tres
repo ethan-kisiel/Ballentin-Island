@@ -1,25 +1,10 @@
-[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://ckpeu4k3d3kny"]
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://ckpeu4k3d3kny"]
 
 [ext_resource type="Material" uid="uid://4gxtvo4kuaph" path="res://Core/Materials/GlobalMaterial.tres" id="1_68q7s"]
-
-[sub_resource type="Curve" id="Curve_jlq0e"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.720764, 0.534399), 1.4, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_qm8p1"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.565632, 0.310805), 1.4, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_sr8kv"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.835322, 0.255565), 1.4, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_jgod0"]
-curve_x = SubResource("Curve_jlq0e")
-curve_y = SubResource("Curve_qm8p1")
-curve_z = SubResource("Curve_sr8kv")
+[ext_resource type="Texture2D" uid="uid://07vccybdrnck" path="res://Core/Materials/GRIDTex.png" id="1_tplwe"]
 
 [resource]
 next_pass = ExtResource("1_68q7s")
-albedo_color = Color(0.976678, 0.529121, 3.85046e-07, 1)
-albedo_texture = SubResource("CurveXYZTexture_jgod0")
+albedo_texture = ExtResource("1_tplwe")
+uv1_triplanar = true
+uv1_world_triplanar = true
